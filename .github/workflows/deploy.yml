@@ -70,3 +70,19 @@ jobs:
             docker compose pull
             docker compose up -d
             docker image prune -f
+  debug-secrets:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Inspect secret shapes
+        env:
+          BSK: ${{ secrets.BASTION_SSH_PRIVATE_KEY }}
+          DSK: ${{ secrets.SSH_PRIVATE_KEY }}
+        run: |
+          echo "BASTION length: ${#BSK}"
+          echo "DEPLOY  length: ${#DSK}"
+          echo "BASTION first line: $(printf '%s' "$BSK" | head -1)"
+          echo "BASTION last line:  $(printf '%s' "$BSK" | tail -1)"
+          echo "DEPLOY  first line: $(printf '%s' "$DSK" | head -1)"
+          echo "DEPLOY  last line:  $(printf '%s' "$DSK" | tail -1)"
+          echo "BASTION sha256: $(printf '%s' "$BSK" | sha256sum)"
+          echo "DEPLOY  sha256: $(printf '%s' "$DSK" | sha256sum)"
