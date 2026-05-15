@@ -63,6 +63,7 @@ jobs:
           proxy_port: ${{ secrets.BASTION_PORT }}
           proxy_username: ${{ secrets.BASTION_USER }}
           proxy_key: ${{ secrets.BASTION_SSH_PRIVATE_KEY }}
+          debug: true
           script: |
             set -e
             cd /opt/react-app
